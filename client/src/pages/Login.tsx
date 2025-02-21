@@ -7,20 +7,17 @@ import { toast } from "sonner";
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { setUser } from "../redux/slices/userSlice";
-import { useAppDispatch } from "@/redux/store";
-import { log } from "console";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 interface FormData {
-  name: string;
   email: string;
   password: string;
 }
 
-const Signup = () => {
+const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<FormData>({
-    name: "",
     email: "",
     password: "",
   });
@@ -34,20 +31,23 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signup", formData);
+      const response = await axios.post("http://localhost:5000/api/auth/login", formData);
       const {user} = response.data; // Assuming API returns { id, email, name }
+      console.log(user);
+      
 
       dispatch(setUser(user)); // Update Redux store
-      
-      toast.success("Signup successful! Redirecting to home...");
+      toast.success("Login successful! Redirecting to home...");
 
       setTimeout(() => navigate("/home"), 2000);
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Signup failed. Please try again.");
+      toast.error(error.response?.data?.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
+
 
   return (
     <div
@@ -63,7 +63,7 @@ const Signup = () => {
       {/* Left side with welcome text */}
       <div className="hidden lg:flex w-1/2 relative z-10 flex-col justify-center items-center text-white px-8 gap-[450px]">
         <div className="bg-black/40 p-4 rounded-lg mt-6 text-center">
-          <h1 className="text-5xl font-bold drop-shadow-lg">Welcome to Sports App</h1>
+          <h1 className="text-5xl font-bold drop-shadow-lg">Welcome Back to Sports App</h1>
           <p className="text-lg">
             Connect with experts in the sports industry and assess your skills and performances.
           </p>
@@ -75,7 +75,7 @@ const Signup = () => {
         </div>
       </div>
 
-      {/* Right side with signup form */}
+      {/* Right side with login form */}
       <div className="flex justify-center items-center w-full lg:w-1/2 p-6 relative z-10">
         <Card
           className="w-full max-w-md p-6 shadow-lg 
@@ -84,15 +84,11 @@ const Signup = () => {
         >
           <CardContent>
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Sign Up to Sports App</h2>
+              <h2 className="text-2xl font-bold">Login to Sports App</h2>
             </div>
-            <p className="text-gray-600 dark:text-gray-300 mt-2">Join the community and start your journey.</p>
+            <p className="text-gray-600 dark:text-gray-300 mt-2">Access your account and continue your journey.</p>
 
             <form onSubmit={handleSubmit}>
-              <div className="mt-4">
-                <Label>Name</Label>
-                <Input name="name" type="text" value={formData.name} onChange={handleChange} placeholder="John Doe" required />
-              </div>
               <div className="mt-4">
                 <Label>Email Address</Label>
                 <Input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" required />
@@ -103,14 +99,14 @@ const Signup = () => {
               </div>
 
               <Button className="w-full mt-6" type="submit" disabled={loading}>
-                {loading ? "Signing Up..." : "Sign Up"}
+                {loading ? "Logging In..." : "Login"}
               </Button>
             </form>
 
             <p className="text-center text-sm mt-4">
-              Already a member?{" "}
-              <Link to="/login" className="text-blue-800">
-                Log In
+              New here?{" "}
+              <Link to="/signup" className="text-blue-800">
+                Sign Up
               </Link>
             </p>
           </CardContent>
@@ -120,4 +116,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
