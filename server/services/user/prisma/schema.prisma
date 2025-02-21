@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+enum Role {
+  user 
+  admin 
+  player
+  team
+  expert
+  sponsor
+}
+enum Gender {
+  male 
+  female 
+  other
+}
+model UserProfile {
+  id String @id @default(uuid()) // Matches the `id` in Auth Service's User table
+  firstName String @map("first_name")
+  lastName String @map("last_name")
+  mobileNumber String @unique @map("mobile_number")
+  photo String?
+  gender Gender?
+  age Int?
+  birthYear Int? @map("birth_year")
+  language String[] 
+  height Float?
+  weight Float?
+  skinColor String? @map("skin_color")
+  city String?
+  country String?
+  bio String?
+  socialLinks Json? @map("social_links")
+  interests String[] // Only for general users
+  profession String? // For artists and experts
+  subProfession String? // For artists and experts
+  company String? // For sponsors
+  role Role
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}

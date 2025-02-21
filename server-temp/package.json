@@ -1,0 +1,39 @@
+{
+  "name": "server-temp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsc-watch --onSuccess \"npm start dev\" ",
+    "build": "tsc -p ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "axios": "^1.7.9",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "pino": "^9.6.0",
+    "pino-http": "^10.4.0",
+    "pino-pretty": "^13.0.0",
+    "stripe": "^17.6.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.8",
+    "@types/node": "^22.13.4",
+    "prisma": "^6.4.1",
+    "tsc-watch": "^6.2.1",
+    "typescript": "^5.7.3"
+  }
+}
