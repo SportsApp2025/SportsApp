@@ -1,19 +1,30 @@
-import { useAppDispatch } from "./redux/store";
-import { setUser } from "./redux/slices/userSlice";
-import { Button } from "./components/ui/button";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MainLayout from "./layout/MainLayout";
+import Signup from "./pages/Signup";
+import { ThemeProvider } from "./components/ThemeProvider";
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "login",
+        element: <Signup />,
+      },
+    ],
+  },
+]);
 
 const App = () => {
-  const dispatch = useAppDispatch();
-
-  const handleLogin = () => {
-    dispatch(setUser({ id: "123", email: "user@example.com", name: "John Doe" }));
-  };
-
   return (
-    <div className='bg-red-300'>
-      <Button onClick={handleLogin}>Login</Button>
-    </div>
-  )
-}
+    <ThemeProvider>
+      <RouterProvider router={appRouter} />
+    </ThemeProvider>
+  );
+};
 
-export default App
+export default App;
+
+
+
