@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { setUser } from "../redux/slices/userSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
 
 interface FormData {
   email: string;
